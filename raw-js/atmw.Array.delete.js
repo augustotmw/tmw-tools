@@ -17,16 +17,16 @@ Array.prototype.delete = function() {
             arr.some(function(el, j){
                 if(el == todel[i]){
                     arraux.push(j+'');
-                }
+                };
                 return el == todel[i];
             });
-        }
+        };
         arraux = arraux.sort();
         for(var i=arraux.length-1;i>=0;i--) {
             arr.splice(arraux[i],1);
-        }
+        };
         return arr;
     } else {
         return false;
-    }
-}
+    };
+};
