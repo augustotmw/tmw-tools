@@ -1,12 +1,11 @@
 
-/*
-
-returns array without deleted items
-
-example: [3,5,7].delete([2,7,4,3]);
-
-*/
-
+/**
+ * @method delete
+ * @param {Array} arguments[0] Array with items to remove from trigger array
+ * @description Returns array without deleted items
+ * @example [3,5,7].delete([2,7,4,3]);
+ * @returns {Array} Array without deleted items.
+ */
 
 Array.prototype.delete = function() { 
     var arr = this;
