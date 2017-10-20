@@ -1,0 +1,15 @@
+
+
+$font-size-base: 16;
+
+@function pt-to-px($pt) {
+  @return #{($pt*96)/72}px;
+}
+
+@function px-to-em($px,$base: $font-size-base){
+  @return #{$px/$base}em;
+}
+
+@function pt-to-em($pt,$base: $font-size-base){
+  @return #{(($pt*96)/72)/$base}em;
+}
