@@ -1,0 +1,31 @@
+
+
+@mixin min480px {
+    @media all and (min-width: 480px) {
+        @content;
+    }
+}
+  
+@mixin min768px {
+    @media all and (min-width: 768px) {
+        @content;
+    }
+}
+
+@mixin min960px {
+    @media all and (min-width: 960px) {
+        @content;
+    }
+}
+
+@mixin min1024px {
+    @media all and (min-width: 1024px) {
+        @content;
+    }
+}
+
+@mixin min1200px {
+    @media all and (min-width: 1200px) {
+        @content;
+    }
+}
