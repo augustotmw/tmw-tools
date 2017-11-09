@@ -1,15 +1,62 @@
-
-
+/// Font size base to calculations
 $font-size-base: 16;
 
-@function pt-to-px($pt) {
-  @return #{($pt*96)/72}px;
+
+/// Remove the unit of a length; from https://css-tricks.com/snippets/sass/strip-unit-function/
+/// @param {Number} $number - Number to remove unit from
+/// @return {Number} - Unitless number
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return $number / ($number * 0 + 1);
+  }
+
+  @return $number;
 }
 
-@function px-to-em($px,$base: $font-size-base){
-  @return #{$px/$base}em;
+/// Converts points into pixels
+/// @param {Number} $number - Number in points to convert
+/// @return {Number} - Number converted to pixels
+@function pt-to-px($number) {
+  $number: strip-unit($number);
+  @return #{($number*96)/72}px;
 }
 
-@function pt-to-em($pt,$base: $font-size-base){
-  @return #{(($pt*96)/72)/$base}em;
+/// Converts pixels into 'em' unit
+/// @param {Number} $number - Number in pixels to convert
+/// @param {Number} $base - Base font size to use on calculation; @default {Number} $font-size-base
+/// @return {Number} - Number converted to 'em' unit
+@function px-to-em($number,$base: $font-size-base){
+  $number: strip-unit($number);
+  $base: strip-unit($base);
+  @return #{$number/$base}em;
+}
+
+/// Converts pixels into percents
+/// @param {Number} $number - Number in pixels to convert
+/// @param {Number} $base - Base font size to use on calculation; @default {Number} $font-size-base
+/// @return {Number} - Number converted to percent
+@function px-to-pc($number,$base: $font-size-base){
+  $number: strip-unit($number);
+  $base: strip-unit($base);
+  @return #{($number/$base)*100%};
+}
+
+/// Converts points into 'em' unit
+/// @param {Number} $number - Number in points to convert
+/// @param {Number} $base - Base font size to use on calculation; @default {Number} $font-size-base
+/// @return {Number} - Number converted to 'em' unit
+@function pt-to-em($number,$base: $font-size-base){
+  $number: strip-unit($number);
+  $base: strip-unit($base);
+  @return #{(($number*96)/72)/$base}em;
+}
+
+/// Converts points into percent
+/// @param {Number} $number - Number in points to convert
+/// @param {Number} $base - Base font size to use on calculation; @default {Number} $font-size-base
+/// @return {Number} - Number converted to percent
+@function pt-to-pc($number,$base: $font-size-base){
+  $number: strip-unit($number);
+  $base: strip-unit($base);
+  @return #{((($number*96)/72)/$base)*100%};
 }
