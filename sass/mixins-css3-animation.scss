@@ -16,14 +16,80 @@
     }
 }
 
-@mixin animation($str) {
-  -webkit-animation: #{$str};
-  -moz-animation: #{$str};
-  -ms-animation: #{$str};
-  -o-animation: #{$str};
-  animation: #{$str};      
-}
+@mixin animation($short: null, $name: null, $duration: null, $timingFunction: null, $delay: null, $iterationCount: null, $direction: null, $fillMode: null, $playState: null) {
+	
+	@if $short {
+		-webkit-animation: $short;
+		-moz-animation: $short;
+		-ms-animation: $short;
+		-o-animation: $short;
+		animation: $short;
+	}
 
+	@if $name and not $short {
+		-webkit-animation-name: $name;
+		-moz-animation-name: $name;
+		-ms-animation-name: $name;
+		-o-animation-name: $name;
+		animation-name: $name;
+	}
+
+	@if $duration and not $short {
+		-webkit-animation-duration: $duration;
+		-moz-animation-duration: $duration;
+		-ms-animation-duration: $duration;
+		-o-animation-duration: $duration;
+		animation-duration: $duration;
+	}
+
+	@if $timingFunction and not $short {
+		-webkit-animation-timing-function: $timingFunction;
+		-moz-animation-timing-function: $timingFunction;
+		-ms-animation-timing-function: $timingFunction;
+		-o-animation-timing-function: $timingFunction;
+		animation-timing-function: $timingFunction;
+	}
+
+	@if $delay and not $short {
+		-webkit-animation-delay: $delay;
+		-moz-animation-delay: $delay;
+		-ms-animation-delay: $delay;
+		-o-animation-delay: $delay;
+		animation-delay: $delay;
+	}
+
+	@if $iterationCount and not $short {
+		-webkit-animation-iteration-count: $iterationCount;
+		-moz-animation-iteration-count: $iterationCount;
+		-ms-animation-iteration-count: $iterationCount;
+		-o-animation-iteration-count: $iterationCount;
+		animation-iteration-count: $iterationCount;
+	}
+
+	@if $direction and not $short {
+		-webkit-animation-direction: $direction;
+		-moz-animation-direction: $direction;
+		-ms-animation-direction: $direction;
+		-o-animation-direction: $direction;
+		animation-direction: $direction;
+	}
+
+	@if $fillMode and not $short {
+		-webkit-animation-fill-mode: $fillMode;
+		-moz-animation-fill-mode: $fillMode;
+		-ms-animation-fill-mode: $fillMode;
+		-o-animation-fill-mode: $fillMode;
+		animation-fill-mode: $fillMode;
+	}
+
+	@if $playState and not $short {
+		-webkit-animation-play-state: $playState;
+		-moz-animation-play-state: $playState;
+		-ms-animation-play-state: $playState;
+		-o-animation-play-state: $playState;
+		animation-play-state: $playState;
+	}
+}
 
 /* 
 Usage
@@ -37,7 +103,10 @@ Usage
   width: 100px;
   height: 100px;
   background: black;
-  @include animation('slide-down 5s 3');
+  @include animation(slide-down 5s 3);
+  @include animation($name: 'animationName');
+  @include animation($duration: 300ms);
+  etc.
 }
 
 */
