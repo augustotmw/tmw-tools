@@ -140,3 +140,43 @@ angular.module("MyApp",[]).directive("tabsBlock", ["$timeout","$rootScope","tmwT
         }
     }
 }]);
+
+
+
+/* 
+
+exemplo html:
+
+            <div class="tabs-block" tabs-block on-change-tab="on.changeTab();">
+                <div class="tabs">
+                    <div><a href="javascript:;" class="tab" tab="0" tabindex="-1">Tab1</a></div>
+                    <div><a href="javascript:;" class="tab" tab="1" tabindex="-1">Tab2</a></div>
+                    <div><a href="javascript:;" class="tab" tab="2" tabindex="-1">Tab3</a></div>
+                    <div class="active-mark"><span></span></div>
+                </div>
+                <div class="tab-item chat">
+                    <a href="javascript:;" class="tab" tab="0" tabindex="-1">Tab1</a>
+                    <div class="panel" tab-panel>
+                        <div class="panel-wrap">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-item telefones">
+                    <a href="javascript:;" class="tab" tab="1" tabindex="-1">Tab2</a>
+                    <div class="panel" tab-panel>
+                        <div class="panel-wrap">
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-item">
+                    <a href="javascript:;" class="tab" tab="2" tabindex="-1">Tab3</a>
+                    <div class="panel" tab-panel>
+                        <div class="panel-wrap">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+*/
