@@ -1,5 +1,5 @@
 
-angular.module("MyApp",[]).directive("typewriter",[function(){
+angular.module("MyApp",[]).directive("typewriter",["ZeppelinDefaults",function(zdefaults){
     return {
         restrict: "A",
         link: function(scope, element, attrs){
@@ -73,35 +73,44 @@ angular.module("MyApp",[]).directive("typewriter",[function(){
                         model = false;
                     }
 
-                    var updateText = function(text){
-                        if(model){
-                            eval("scope."+model+" = '"+text+"';");
-                            !scope.$$phase ? scope.$digest() : false;
-                        } else {
-                            tag.text(text);
-                        }
-                    }
+                    if(text != tag.text()) {
 
-                    if(rewriteInterval) {
-                        clearInterval(rewriteInterval);
-                        updateText("");
-                    }
-                                        
-                    rewriteInterval = setInterval(function(){
-                        if(ct == text.length) {
-                            clearInterval(rewriteInterval);
-                        } else {
-                            if(dct > 0) {
-                                dct--;
-                                str = str.substr(0,dct);
-                                updateText(str);
+                        var updateText = function(text){
+                            // console.log("text: ", text);
+                            if(model){
+                                eval("scope."+model+" = '"+text+"';");
+                                // console.log("model: ", eval("scope."+model));
+                                !scope.$$phase ? scope.$digest() : false;
                             } else {
-                                aux = aux + text.charAt(ct);
-                                updateText(aux);
-                                ct++;
+                                tag.text(text);
                             }
                         }
-                    },70);
+
+                        if(rewriteInterval) {
+                            // console.log("rewriteInterval");
+                            clearInterval(rewriteInterval);
+                            updateText("");
+                        }
+                                            
+                        rewriteInterval = setInterval(function(){
+                            if(ct == text.length) {
+                                clearInterval(rewriteInterval);
+                                rewriteInterval = null;
+                            } else {
+                                if(dct > 0) {
+                                    dct--;
+                                    str = str.substr(0,dct);
+                                    // console.log("deleting");
+                                    updateText(str);
+                                } else {
+                                    aux = aux + text.charAt(ct);
+                                    // console.log("deleting");
+                                    updateText(aux);
+                                    ct++;
+                                }
+                            }
+                        },70);
+                    }
                 }
             });
 

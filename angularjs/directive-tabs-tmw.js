@@ -23,26 +23,24 @@ angular.module("MyApp",[]).factory("tmwTools", [function(){
 /**@func tabsBlock
  * @type AngularJS directive
  * @requires AngularJS
-  * @desc 
+ * @desc 
  * @version 0.0.1.2018041001
+ * 
+ * @todo
+ * - colocar opção de ativação de aba por resolução
  * 
  */
 
 
-angular.module("MyApp",[]).directive("tabsBlock", ["$timeout","$rootScope","tmwTools", function($timeout, $rootScope, tmwTools){
+angular.module("MyApp",[]).directive("tabsBlock", ["$timeout","$rootScope","ZeppelinDefaults", function($timeout, $rootScope, zdefaults){
     return {
         restrict: "A",
         link: function(scope, element, attrs){
 
             var triggers = element.find("[tab]");
-            var tabs = element.find(".tabs");
             var panels = element.find("[tab-panel]");
             var _winw = angular.element(window).outerWidth();
             var elClasse = element.prop("class");
-
-            var _ctrl = element.parents("[ng-controller]");
-            var ctrlName = _ctrl.length ? _ctrl.attr("ng-controller") : "";
-            var tabName = "$tabsBlock";
 
             element.find("[tab]").on("click", function(ev){
                 var $this = angular.element(this);
@@ -60,7 +58,7 @@ angular.module("MyApp",[]).directive("tabsBlock", ["$timeout","$rootScope","tmwT
                     element.prop("class", elClasse).addClass("tab-"+tabnum+"-selected");
 
                     if(_winw < 768){
-                        tmwTools.scrollTo(_panel.parents(".tab-item:first").offset().top, {menu: true, adjust: -30});
+                        zdefaults.scrollTo(_panel.parents(".tab-item:first").offset().top, {menu: true, adjust: -30});
                     }
 
                 } else {
@@ -120,12 +118,16 @@ angular.module("MyApp",[]).directive("tabsBlock", ["$timeout","$rootScope","tmwT
                         element.prop("class", elClasse).addClass("tab-"+tabnum+"-selected");
                     }
                     
-                    if(attrs.startAtTab && !isNaN(parseInt(attrs.startAtTab))) {
-                        _flux(parseInt(attrs.startAtTab));
-                        // triggers.filter(":eq("+attrs.startAtTab+")").trigger("click");
+                    if(attrs.startAtTab && attrs.startAtTab != "") {
+                        if(attrs.startAtTab == "random") {
+                            _flux(Math.floor(Math.random()*panels.length));
+                        } else if(!isNaN(parseInt(attrs.startAtTab))) {
+                            _flux(parseInt(attrs.startAtTab));
+                        } else {
+                            _flux(0);    
+                        }
                     } else {
                         _flux(0);
-                        // triggers.filter(":first").trigger("click");
                     }
                 }
             });
