@@ -1,0 +1,65 @@
+@mixin transform($valor) {
+    -webkit-transform: $valor;
+    -moz-transform: $valor;
+    -ms-transform: $valor;
+    -o-transform: $valor;
+    transform: $valor;
+}
+
+@mixin transform-origin($valor) {
+    -webkit-transform-origin: $valor;
+    -moz-transform-origin: $valor;
+    -ms-transform-origin: $valor;
+    -o-transform-origin: $valor;
+    transform-origin: $valor;
+}
+
+@mixin transition($valor...) {
+    -webkit-transition: $valor;
+    -moz-transition: $valor;
+    -ms-transition: $valor;
+    -o-transition: $valor;
+    transition: $valor;
+}
+
+@mixin border-radius($valor) {
+    -webkit-border-radius: $valor;
+    -moz-border-radius: $valor;
+    -ms-border-radius: $valor;
+    -o-border-radius: $valor;
+    border-radius: $valor;
+}
+
+@mixin box-shadow($valor) {
+    -webkit-box-shadow: $valor;
+    -moz-box-shadow: $valor;
+    box-shadow: $valor;
+}
+
+@mixin background-size($valor) {
+    -webkit-background-size: $valor;
+    -moz-background-size: $valor;
+    -o-background-size: $valor;
+    background-size: $valor;
+}
+
+@mixin display-flex() {
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($valor) {
+    -webkit-flex: $valor;
+    -ms-flex: $valor;
+    flex: $valor;
+}
+
+@mixin flex-direction($valor) {
+    -webkit-flex-direction: $valor;
+    flex-direction: $valor;
+}
+
+@mixin flex-grow($valor) {
+    -webkit-flex-grow: $valor;
+    flex-grow: $valor;
+}
