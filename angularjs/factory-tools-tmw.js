@@ -30,17 +30,6 @@ angular.module("MyApp", []).factory("tmwTools", ["$window", function ($window) {
                 return JSON.parse($window.localStorage[key] || '{}');
             }
         },
-        scrollTo: function (coordY, config) {
-            config = angular.extend({}, {
-                adjust: 0,
-                callback: function () { return true; },
-                menu: 0
-            }, (config && (config instanceof Object) ? config : {}));
-
-            angular.element("html, body").animate({ "scrollTop": (coordY + config.adjust) - config.menu }, this.animation.speed, function () {
-                config.callback(coordY, config, this);
-            });
-        },
         regex: {
             alphanum: (/[0-9a-zA-ZÀÁÂÃÄÅǍàáâãäåǎÈÉÊËèéêëĚěÊ̌ê̌Ɛ̌ɛ̌ÌÍÎÏìíîïǏǐÒÓÔÕÖØòóôõöøǑǒÙÚÛÜùúûüǓǔǙǚÝŸÿýY̌y̌ÇçÑñ\s\-]/g),
             name: (/[^a-zA-ZÀÁÂÃÄÅǍàáâãäåǎÈÉÊËèéêëĚěÊ̌ê̌Ɛ̌ɛ̌ÌÍÎÏìíîïǏǐÒÓÔÕÖØòóôõöøǑǒÙÚÛÜùúûüǓǔǙǚÝŸÿýY̌y̌ÇçÑñ\s\-]/g),
@@ -75,7 +64,92 @@ angular.module("MyApp", []).factory("tmwTools", ["$window", function ($window) {
             stopwords: function (term) {
                 return term.replace($tools.regex.stopwords, "");
             }
+        },
+        scrollTo: function (coordY, config) {
+            config = angular.extend({}, {
+                adjust: 0,
+                callback: function () { return true; },
+                menu: 0
+            }, (config && (config instanceof Object) ? config : {}));
+
+            angular.element("html, body").animate({ "scrollTop": (coordY + config.adjust) - config.menu }, this.animation.speed, function () {
+                config.callback(coordY, config, this);
+            });
+        },
+        youtube: {
+            add: function (videoConfig) {
+                if (typeof $rootScope.youtubeVideos === 'undefined') {
+                    $rootScope.youtubeVideos = [];
+                }
+
+                if (videoConfig instanceof Array) {
+                    for (var i = 0; i < videoConfig.length; i++) {
+                        $rootScope.youtubeVideos.push(videoConfig[i]);
+                    }
+                } else if (videoConfig instanceof Object) {
+                    $rootScope.youtubeVideos.push(videoConfig);
+                } else {
+                    console.warn("ZeppelinDefaults.youtube.add says: Propriedades de vídeo passadas não estão no formato de Objeto ou Array.");
+                }
+
+            },
+            get: function (id) {
+                if (typeof $rootScope.youtubeVideos === 'undefined') {
+                    return false;
+                } else {
+                    var video = false;
+                    for(var i=0; i < $rootScope.youtubeVideos.length; i++) {
+                        if($rootScope.youtubeVideos[i].id = id) {
+                            video = $rootScope.youtubeVideos[i];
+                        }
+                    }
+                    return video;
+                }
+            },
+            load: function () {
+
+                if (angular.element("script[src*='www.youtube.com/iframe_api']").length < 1) {
+                    var tag = document.createElement('script');
+
+                    tag.src = "https://www.youtube.com/iframe_api";
+                    var firstScriptTag = document.getElementsByTagName('script')[0];
+                    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+                    function createPlayer(playerInfo) {
+                        return new YT.Player(playerInfo.id, {
+                            videoId: playerInfo.videoId
+                        });
+                    }
+
+                    window.onYouTubeIframeAPIReady = function () {
+                        if (typeof $rootScope.youtubeVideos === 'undefined') return;
+
+                        for (var i = 0; i < $rootScope.youtubeVideos.length; i++) {
+                            var curplayer = createPlayer($rootScope.youtubeVideos[i]);
+                            $rootScope.youtubeVideos[i].instance = curplayer;
+                        }
+                    }
+
+                }
+
+                /* how to use: 
+                
+                add has to come before load:
+
+                    tools.youtube.add({
+                        id: "videoPlayer",
+                        videoId: 'qm2Lab-8Uto'
+                    });
+
+                    tools.youtube.load();
+
+                     tools.youtube.get("videoPlayer");
+                
+                */
+
+            }
         }
+
     }
 
     return $tools;
